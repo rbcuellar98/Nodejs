@@ -1,6 +1,7 @@
 // require file system module
 const fs = require('fs');
 const http = require('http');
+const url = require('url');
 // home folder started an move into txt folder to txt specify the encoding
 // blocking, synchronous way
 // const txtIn= fs.readFileSync('./txt/input.txt', 'utf-8');
@@ -30,8 +31,21 @@ const http = require('http');
 /////////////////////////
 // Server creation //
 const server = http.createServer((req, res) => {
-    console.log(req);
-    res.end('Hello from the server!');
+    console.log(req.url);
+    const pathName = req.url;
+    if(pathName === '/' || pathName === '/home'){
+        res.end('Home page overview');
+    }else if (pathName === '/product'){
+        res.end('Product page on site')
+    }else{
+        // set header before the response
+        res.writeHead(404, {
+            'Content-type': 'text/html',
+            'personal-header': 'pageIsEntered'
+        });
+        res.end('<h1>Page count not be found</h1>');
+    }
+
 })
 
 server.listen(8000, '127.0.0.1', ()=> {
