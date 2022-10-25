@@ -32,23 +32,28 @@ const url = require('url');
 /////////////////////////
 // Server creation //
 
+const home = fs.readFileSync(`${__dirname}/html/home.html`,'utf-8');
+const card = fs.readFileSync(`${__dirname}/html/card.html`,'utf-8');
+const product = fs.readFileSync(`${__dirname}/html/product.html`,'utf-8');
 
-const data = fs.readFileSync(`${__dirname}/dev-data/data.json`,'utf-8');
+const data = fs.readFileSync(`${__dirname}/data/data.json`,'utf-8');
+
 const dataObject = JSON.parse(data);
 
-
-
-
 const server = http.createServer((req, res) => {
-    console.log(req.url);
     const pathName = req.url;
+    // Home Page
     if(pathName === '/' || pathName === '/home'){
-        res.end('Home page overview');
+        res.writeHead(200, { 'Content-type': 'text/html' });
+        res.end(home);
+        // Product Page
     }else if (pathName === '/product'){
         res.end('Product page on site')
+        // API
     }else if (pathName === '/api') {
     res.writeHead(200, { 'Content-type': 'application/json' });
         res.end(data);
+        // Not Found
     }else{
         // set header before the response
         res.writeHead(404, {
