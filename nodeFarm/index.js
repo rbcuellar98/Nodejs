@@ -37,6 +37,9 @@ const server = http.createServer((req, res) => {
         res.end('Home page overview');
     }else if (pathName === '/product'){
         res.end('Product page on site')
+    }else if (pathName === '/api') {
+        fs.readFile('./dev-data/data.json');
+        res.end('Holder for API')
     }else{
         // set header before the response
         res.writeHead(404, {
