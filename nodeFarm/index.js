@@ -2,6 +2,7 @@
 const fs = require('fs');
 const http = require('http');
 const url = require('url');
+
 // home folder started an move into txt folder to txt specify the encoding
 // blocking, synchronous way
 // const txtIn= fs.readFileSync('./txt/input.txt', 'utf-8');
@@ -30,6 +31,14 @@ const url = require('url');
 
 /////////////////////////
 // Server creation //
+
+
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`,'utf-8');
+const dataObject = JSON.parse(data);
+
+
+
+
 const server = http.createServer((req, res) => {
     console.log(req.url);
     const pathName = req.url;
@@ -38,8 +47,8 @@ const server = http.createServer((req, res) => {
     }else if (pathName === '/product'){
         res.end('Product page on site')
     }else if (pathName === '/api') {
-        fs.readFile('./dev-data/data.json');
-        res.end('Holder for API')
+    res.writeHead(200, { 'Content-type': 'application/json' });
+        res.end(data);
     }else{
         // set header before the response
         res.writeHead(404, {
