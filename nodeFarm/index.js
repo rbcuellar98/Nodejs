@@ -31,7 +31,9 @@ const url = require('url');
 
 /////////////////////////
 // Server creation //
-
+const replace = (temp, product) =>{
+    let output = temp.replace('');
+}
 const home = fs.readFileSync(`${__dirname}/html/home.html`,'utf-8');
 const card = fs.readFileSync(`${__dirname}/html/card.html`,'utf-8');
 const product = fs.readFileSync(`${__dirname}/html/product.html`,'utf-8');
@@ -46,6 +48,8 @@ const server = http.createServer((req, res) => {
     if(pathName === '/' || pathName === '/home'){
         res.writeHead(200, { 'Content-type': 'text/html' });
         res.end(home);
+
+        const cardsHtml = dataObj.map(el => replace(card, el));
         // Product Page
     }else if (pathName === '/product'){
         res.end('Product page on site')
